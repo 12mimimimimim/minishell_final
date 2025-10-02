@@ -1,0 +1,33 @@
+// NOW THAT WE HAVE THE LINKED LIST OF TOKENS WE HAVE TO TURN IT INTO IT'S REPSECTIVE AST FORM
+
+// AN AST GROWS LEFT WARDS SO AN AST IS GONNA BE ON THE LEFT
+
+
+// Token structure for lexical analysis
+// typedef struct s_token {
+//     t_token_type type;       // Type of token
+//     char *value;            // Token value (e.g., "ls" or "file.txt")
+//     struct s_token *next;   // Pointer to next token
+// } t_token;
+
+// // AST node structure for command parsing
+// typedef struct s_ast {
+//     t_ast_node_type type;  // Type of AST node
+//     char **argv;           // Array of arguments for commands 
+//     struct s_ast *left;   // Left child (for pipes or redirections)
+//     struct s_ast *right;    // Right child (for pipes or redirections)
+//     char *filename;     // Filename for redirections
+// } t_ast;
+
+
+//  IF IT'S ONLY COMMAND
+// WE FILL ARGV WITH THE COMMANDS (AND ARGUMENTS) AND RETURN THE LEFT NODE WITH IT
+
+// IF IT'S A REDIRECTION
+// WE COLLECT THE COMMAND AND THE FILENAME 
+
+// HERE'S WHERE THINGS GET FUNKYY
+// IF IT'S A PIPE YOU HAVE TO CREATE TWO AST THAT'S LEFT AND RIGHT AND GROW IT LEFTWARDS BY ASSIGNING A PIPE(LET'S CALL IT PIPE NODE)
+// TO THE LEFT
+
+// if that makes any sense..........
