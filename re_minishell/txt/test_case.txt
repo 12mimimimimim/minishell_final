@@ -1,0 +1,137 @@
+test cases found:
+
+syntax error:
+
+minishell$ echo hi | > >>
+-bash: syntax error near unexpected token `newline [OUTPUT MISMATCH]
+
+[9/4/2025 SYNTAX]
+
+Test  12: ❌ echo "> >> < * ? [ ] | ; [ ] || && ( ) & # $  <<"  (WORKS)
+mini output = (> >> < bash_outfiles bash.supp bonus bonus_bonus builtins bye echo extras local.supp loop.out manual_tests mini_outfiles os_specific outfiles pipes README.md redirects syntax tester wildcards ? [ ] | ; [ ] || && ( ) & # <<)
+bash output = (> >> < bash_outfiles bash.supp bonus bonus_bonus builtins bye echo extras local.supp loop.out manual_tests mini_outfiles os_specific outfiles pipes README.md redirects syntax tester wildcards ? [ ] | ; [ ] || && ( ) & # $ <<)
+
+note: the $ doesn't get printed.
+
+EXPORT [TEST CASES]
+
+
+CD [TEST CASES]
+Test  39: ❌ cd $PWD hi 
+mini exit code = 0
+bash exit code = 1
+mini error = ()
+bash error = ( too many arguments)
+
+Test  49: ❌ exit hello 
+mini output = (minishell: exit: hello: numeric argument required)
+bash output = ()
+mini exit code = 255
+bash exit code = 2
+mini error = ()
+bash error = ( numeric argument required)
+
+[REDIRECTION]
+Test  72: ❌ cat <"./test_files/infile" | echo hi  (WORKS)
+mini output = ()
+bash output = (hi)
+mini exit code = 1
+bash exit code = 0
+
+Test  74: ❌ cat <"./test_files/infile_big" | echo hi (WORKS)
+mini output = ()
+bash output = (hi)
+mini exit code = 1
+bash exit code = 0
+
+Test  76: ❌ cat <missing | cat (WORKS)
+mini exit code = 1
+bash exit code = 0
+
+Test  77: ❌ cat <missing | echo oi  (WORKS)
+mini output = ()
+bash output = (oi)
+mini exit code = 1
+bash exit code = 0
+
+Test  79: ❌ echo <123 <456 hi | echo 42  (ECHOING 42 works but executes hi first before checking edirection)
+mini output = ()
+bash output = (42)
+mini exit code = 1
+bash exit code = 0
+
+Test  82: ❌ echo hi >         ./outfiles/outfile01 bye (works)
+Files ./mini_outfiles/outfile01 and ./bash_outfiles/outfile01 differ
+mini outfiles:
+hi
+bash outfiles:
+hi bye
+
+Test  84: ❌ ls >./outfiles/outfile01 >./test_files/invalid_permission  (MISMATCH IN EXIT CODES)
+Only in ./bash_outfiles: outfile01
+mini outfiles:
+cat: './mini_outfiles/*': No such file or directory
+bash outfiles:
+
+Test  99: ❌ echo hi | >./outfiles/outfile01 echo bye >./test_files/invalid_permission  (WORKS BUT DOESNT GIVE ERROR OUTPUT)
+mini outfiles:
+cat: './mini_outfiles/*': No such file or directory
+bash outfiles:
+mini output = (-bash: syntax error near unexpected token `|')
+bash output = ()
+mini exit code = 2
+bash exit code = 1
+mini error = ()
+bash error = ( No such file or directory)
+
+Test 100: ❌ echo hi | echo bye >./test_files/invalid_permission >./outfiles/outfile01 (WORKS)
+Only in ./mini_outfiles: outfile01
+mini outfiles:
+bye
+bash outfiles:
+cat: './bash_outfiles/*': No such file or directory
+mini exit code = 0
+bash exit code = 1
+mini error = ()
+bash error = ( No such file or directory)
+
+Test 128: ❌ echo hi | echo >>./outfiles/outfile01 bye >./test_files/invalid_permission 
+Only in ./bash_outfiles: outfile01
+mini outfiles:
+cat: './mini_outfiles/*': No such file or directory
+bash outfiles:
+
+Test 130: ❌ cat <minishell.h|ls 
+mini output = ()
+bash output = (bash_outfiles bash.supp bonus bonus_bonus builtins bye echo extras local.supp loop.out manual_tests mini_outfiles os_specific outfiles pipes README.md redirects syntax tester wildcards)
+mini exit code = 1
+bash exit code = 0
+
+[EXTRAS]
+Test 143: ❌ $  (WORKS)
+mini exit code = 126
+bash exit code = 127
+mini error = ( Permission denied)
+bash error = ( command not found)
+
+Test 133: ❌ $EMPTY  (WORKS)
+mini exit code = 126
+bash exit code = 0
+mini error = ( Permission denied)
+bash error = ()
+
+Test 134: ❌ $EMPTY echo hi 
+mini output = ()
+bash output = (hi)
+mini exit code = 126
+bash exit code = 0
+mini error = ( Permission denied)
+bash error = ()
+
+Test 135: ❌ ./test_files/invalid_permission 
+mini exit code = 126
+bash exit code = 0
+mini error = ( Exec format error)
+bash error = ()
+
+

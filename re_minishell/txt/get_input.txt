@@ -1,0 +1,6 @@
+[HOW DOES GET_INPUT WORKS]
+// READS INPUT FROM THE TERMINAL (TURNS INTO CHAR*)
+// IDENTIFIES SYNTAX ERROR
+    > |, >, >>, <, << syntax errors
+// IF PASSED, SPLIT IT INTO A DOUBLE ARRAY FORM (TURNS INTO CHAR**)
+    > if it's a single/double quote handles it as one word
